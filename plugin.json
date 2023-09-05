@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Ottoo Plugins",
+  "FriendlyName": "ChatGPT Plugin",
+  "SystemName": "Widgets.AskToOpenAI",
+  "Version": "1.0",
+  "SupportedVersions": [ "4.60" ],
+  "Author": "Ahmet Yiğit Turhan",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Widgets.AskToOpenAI.dll",
+  "Description": "This plugin is for communicate with ChatGPT"
+}

@@ -1,0 +1,97 @@
+﻿@{
+    NopHtml.AppendCssFileParts("~/Plugins/Widgets.AskToOpenAI/Content/CSS/style.css");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer,"~/Plugins/Widgets.AskToOpenAI/Content/js/askToOpenAI.js");
+
+    NopHtml.AppendCssFileParts("~/Plugins/Widgets.AskToOpenAI/Content/CSS/modaal.css");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/Plugins/Widgets.AskToOpenAI/Content/js/modaal.js");
+
+}
+
+<div class="ask-vendor">
+    <button  class="modaal">Show</button>
+    <button type="button" class="button-2 ask-vendor-button modaal"
+            data-modaal-content-source="#askopenai" data-modaal-type="inline" data-modaal-animation="fade">
+        @T("Plugin.Widgets.AskToOpenAI.Button")
+    </button>
+</div>
+
+<div id="askopenai" style="display:none;">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chatbox</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            .chatbox {
+                width: 300px;
+                margin: 20px auto;
+                border: 1px solid #ccc;
+                padding: 10px;
+            }
+
+            .message {
+                background-color: #f0f0f0;
+                margin-bottom: 10px;
+                padding: 5px;
+                border-radius: 5px;
+            }
+
+            select {
+                width: 100%;
+                padding: 5px;
+                margin-bottom: 10px;
+            }
+
+            button {
+                padding: 5px 10px;
+                background-color: #007BFF;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="chatbox">
+            <div class="message">Welcome to the ChatGPT chatbox!</div>
+            <select id="questionSelect">
+                <option value="What is the water resistance of Samsung Galaxy S9+">What is the water resistance of Samsung Galaxy S9+</option>
+                <option value="What are the key features of the Galaxy S9+">What are the key features of the Galaxy S9+</option>
+                <option value="How is the battery life and charging of Samsung Galaxy S9+">How is the battery life and charging of Samsung Galaxy S9+</option>
+            </select>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function sendMessage() {
+                const select = document.getElementById('questionSelect');
+                const selectedValue = select.value;
+                const messageBox = document.querySelector('.chatbox');
+
+                // Make an AJAX request to your C# method
+                $.get('/Response/GetResponse',
+                    { userQuestion: selectedValue },
+                    function (data, textStatus, jqXHR) {
+                        displayMessage("ChatGPT", data);
+                    });
+            }
+
+            function displayMessage(sender, message) {
+                const messageBox = document.querySelector('.chatbox');
+                const newMessage = document.createElement('div');
+                newMessage.className = 'message';
+                newMessage.textContent = `${sender}: ${message}`;
+                messageBox.appendChild(newMessage);
+            }
+        </script>
+    </body>
+</html>
+
+</div>
+
